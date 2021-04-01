@@ -5,12 +5,12 @@ Author: Maciej Kaczkowski
 
 
 import numpy as np
-from config import WHITE, BLACK
+from config import *
 
 
 class Board:
 
-    def __init__(self, board_size):
+    def __init__(self, board_size=8):
         self.board = np.zeros((board_size, board_size), dtype=int)
         self.board[3][4] = BLACK
         self.board[4][3] = BLACK
@@ -28,21 +28,41 @@ class Board:
 
         while not player_stones.size == 0:
             current_stone = player_stones[-1]
-            # TODO: check all 8 directions, finish get_moves
-            self.check_directions(current_stone[0], current_stone[1])
-            np.append(self.possible_moves, )
+            valid_directions = self.check_directions(current_stone[0], current_stone[1])
+            valid_moves = self.check_direction(current_stone[0], current_stone[1], valid_directions)
+            np.append(self.possible_moves, valid_moves)
             np.delete(player_stones, -1)
 
-    def check_directions(self, x, y) -> 'checks all 8 directions for get_moves method':
+    def look_around(self, x, y) -> "check for opponent's stones in 8 directions":
+        '''
+        :param x: first coordinate of checked point
+        :param y: second coordinate of checked point
+        :return: list of tuples representing directions
+        '''
         colour = self.board[x][y]
-        # print(colour)
-        # oposing_neighbours = [[self.board[i][j] if i <= self.board_size and j <= self.board_size and self.board[i][j] == -colour else 9
-        #                        for i in range(point[0] - 1, point[0] + 1)]
-        #                       for j in range(point[1] - 1, point[1] + 1)]
+        if colour == 0:
+            return []
+        directions = [NORTHWEST, NORTH, NORTHEAST,
+                      WEST, EAST,
+                      SOUTHWEST, SOUTH, SOUTHEAST]
 
-        # return oposing_neighbours
+        valid_directions = [(x_add, y_add) for (x_add, y_add) in directions
+                            if self.board[x + x_add][y + y_add] == - colour]
 
-        pass
+        # TODO: dict or enum directions instead of list comprehensions (for readability of return)
+        return valid_directions
+
+    def check_direction(self, x, y, directions) -> "check how much opponent's stones are in each direction":
+        colour = self.board[x][y]
+        valid_moves = np.array([])
+        # TODO: fix check_direction
+        for (x_add, y_add) in directions:
+            x_temp, y_temp = x, y
+            while self.board[x_temp + x_add][y_temp + y_add] == -colour:
+                x_temp += x_add
+                y_temp += y_add
+            np.append(valid_moves, [x_temp + x_add, y_temp + y_add])
+        return valid_moves
 
     def heuristic_evaluate(self):
         game_state = self.board

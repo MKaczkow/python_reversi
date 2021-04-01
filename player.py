@@ -4,8 +4,7 @@ Author: Maciej Kaczkowski
 '''
 
 
-import numpy as np
-from config import HUMAN, RANDOM, MINMAX
+from config import *
 
 
 class Player:

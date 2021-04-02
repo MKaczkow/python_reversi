@@ -10,6 +10,7 @@ Author: Maciej Kaczkowski
 # hence BLACK is Max player, while WHITE is Min player
 WHITE = -1
 BLACK = 1
+EMPTY = 0
 
 # player's codenames
 HUMAN = 'human'

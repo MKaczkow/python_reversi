@@ -23,8 +23,10 @@ class Reversi:
 
         while running:
             passes = 0
-            passes += self.black_player.play(self, board_instance=self.board)
-            passes += self.white_player.play(self, board_instance=self.board)
+            self.board.playing_next = BLACK
+            passes += self.black_player.play(self.board)
+            self.board.playing_next = WHITE
+            passes += self.white_player.play(self.board)
 
             if passes == 2:
                 running = False

@@ -29,7 +29,6 @@ class Player:
 
     def random_play(self, board_instance):
         valid_moves = board_instance.get_moves()
-        print(type(valid_moves))
         if len(valid_moves) == 0:
             # which means 0 possible moves, so turn is passed
             return 1
@@ -38,4 +37,5 @@ class Player:
         return 0
 
     def algo_play(self, board_instance):
+        # TODO: algo play using min-max with alpha-beta
         return 1

@@ -4,6 +4,8 @@ Author: Maciej Kaczkowski
 '''
 
 
+import numpy as np
+import board
 from config import *
 
 
@@ -12,12 +14,28 @@ class Player:
     def __init__(self, who_plays):
         self.who_plays = who_plays
 
-    def play(self):
+    def play(self, board_instance: board.Board):
+
         if self.who_plays == HUMAN:
             pass
         elif self.who_plays == RANDOM:
-            pass
-        elif self.who_plays == MINMAX:
-            pass
+            passes = self.random_play(self, board_instance)
+        elif self.who_plays == ALGO:
+            passes = self.algo_play(self, board_instance)
         else:
-            pass
+            print('Wrong player name!')
+
+        return passes
+
+    def random_play(self, board_instance):
+        valid_moves = board_instance.get_moves()
+        print(type(valid_moves))
+        if len(valid_moves) == 0:
+            # which means 0 possible moves, so turn is passed
+            return 1
+
+        board_instance.attempt_move(np.choice(valid_moves))
+        return 0
+
+    def algo_play(self, board_instance):
+        return 1

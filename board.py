@@ -12,10 +12,10 @@ class Board:
 
     def __init__(self, board_size=8):
         self.board_state = np.zeros((board_size, board_size), dtype=int)
-        self.board_state[3][4] = BLACK
-        self.board_state[4][3] = BLACK
-        self.board_state[3][3] = WHITE
-        self.board_state[4][4] = WHITE
+        self.board_state[3, 4] = BLACK
+        self.board_state[4, 3] = BLACK
+        self.board_state[3, 3] = WHITE
+        self.board_state[4, 4] = WHITE
         self.possible_moves = np.array([])
         self.playing_next = BLACK
         self.board_size = board_size
@@ -67,6 +67,9 @@ class Board:
 
         valid_moves = np.delete(valid_moves, 0, 0)
         return valid_moves
+
+    def attempt_move(self):
+        pass
 
     def heuristic_evaluate(self):
         game_state = self.board_state

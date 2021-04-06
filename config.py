@@ -15,7 +15,7 @@ EMPTY = 0
 # player's codenames
 HUMAN = 'human'
 RANDOM = 'random'
-MINMAX = 'minmax'
+ALGO = 'minmax'
 
 # cordinates for better readability
 NORTHEAST = (-1, 1)

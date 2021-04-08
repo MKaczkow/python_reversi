@@ -19,21 +19,23 @@ class Player:
         if self.who_plays == HUMAN:
             pass
         elif self.who_plays == RANDOM:
-            passes = self.random_play(self, board_instance)
+            passes = self.random_play(board_instance)
         elif self.who_plays == ALGO:
-            passes = self.algo_play(self, board_instance)
+            passes = self.algo_play(board_instance)
         else:
             print('Wrong player name!')
 
         return passes
 
     def random_play(self, board_instance):
-        valid_moves = board_instance.get_moves()
-        if len(valid_moves) == 0:
+        board_instance.get_moves()
+        if len(board_instance.possible_moves) == 0:
             # which means 0 possible moves, so turn is passed
             return 1
 
-        board_instance.attempt_move(np.choice(valid_moves))
+        index = np.random.randint(len(board_instance.possible_moves))
+        chosen_move = board_instance.possible_moves[index]
+        board_instance.attempt_move(chosen_move)
         return 0
 
     def algo_play(self, board_instance):

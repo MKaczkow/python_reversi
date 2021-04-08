@@ -25,19 +25,24 @@ class Reversi:
             passes = 0
             self.board.playing_next = BLACK
             passes += self.black_player.play(self.board)
+            print(self.board.board_state)
+            print()
             self.board.playing_next = WHITE
             passes += self.white_player.play(self.board)
+            print(self.board.board_state)
+            print()
 
             if passes == 2:
                 running = False
 
-        print("And the winner is")
         if np.sum(self.board.board_state) > 0:
             self.winner = BLACK
-            print("...\n...\n...\nBlack!")
+            print("And the winner is...\nBlack!")
         elif np.sum(self.board.board_state) < 0:
             self.winner = WHITE
-            print("...\n...\n...\nWhite!")
+            print("And the winner is...\nWhite!")
+        else:
+            print("Draw! Nobody wins!")
 
 
 def main():

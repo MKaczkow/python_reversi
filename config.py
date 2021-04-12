@@ -13,9 +13,11 @@ BLACK = 1
 EMPTY = 0
 
 # player's codenames
-HUMAN = 'human'
 RANDOM = 'random'
 ALGO = 'minmax'
+
+# min-max parameters
+MAX_DEPTH = 4
 
 # cordinates for better readability
 NORTHEAST = (-1, 1)

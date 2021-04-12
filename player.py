@@ -16,9 +16,7 @@ class Player:
 
     def play(self, board_instance: board.Board):
 
-        if self.who_plays == HUMAN:
-            pass
-        elif self.who_plays == RANDOM:
+        if self.who_plays == RANDOM:
             passes = self.random_play(board_instance)
         elif self.who_plays == ALGO:
             passes = self.algo_play(board_instance)
@@ -38,6 +36,11 @@ class Player:
         board_instance.attempt_move(chosen_move)
         return 0
 
-    def algo_play(self, board_instance):
-        # TODO: algo play using min-max with alpha-beta
-        return 1
+    def algo_play(self, board_instance, depth):
+        board_instance.get_moves()
+        if len(board_instance.possible_moves) == 0:
+            # which means 0 possible moves, so turn is passed
+            return 1
+
+
+        return 0

@@ -5,6 +5,7 @@ Author: Maciej Kaczkowski
 
 
 import numpy as np
+import copy
 from config import *
 
 
@@ -20,8 +21,9 @@ class Board:
         self.playing_next = BLACK
         self.board_size = board_size
 
-    def get_moves(self) -> 'get list of possible moves':
-        colour = self.playing_next
+    def get_moves(self, colour=None, need_return=False) -> 'get list of possible moves':
+        if colour is None:
+            colour = self.playing_next
 
         places = []
 
@@ -32,6 +34,8 @@ class Board:
 
         places = list(set(places))
         self.possible_moves = places
+        if need_return:
+            return places
 
     def look_around(self, x, y) -> "check for opponent's stones in 8 directions":
         '''
@@ -69,10 +73,15 @@ class Board:
             if 0 <= x_temp <= 7 and 0 <= y_temp <= 7 and self.board_state[x_temp, y_temp] == EMPTY:
                 return x_temp, y_temp
 
-    def attempt_move(self, move):
-        # placing new stone
+    def attempt_move(self, move, colour=None):
+
+        if colour is None:
+            colour = self.playing_next
+
         if move in self.possible_moves:
-            self.board_state[move[0]][move[1]] = self.playing_next
+            print(self.board_state)
+            print(move)
+            self.board_state[move[0]][move[1]] = colour
             for i in range(1, 9):
                 self.flip(i, move[0], move[1])
 
@@ -145,3 +154,10 @@ class Board:
         result = np.multiply(game_state, fields_values)
         result = np.sum(result)
         return result
+
+    def get_child_states(self, colour):
+        valid_moves = self.get_moves(colour, need_return=True)
+        for move in valid_moves:
+            new_board = copy.deepcopy(self)
+            new_board.attempt_move(move)
+            yield new_board

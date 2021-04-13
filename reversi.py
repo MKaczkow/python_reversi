@@ -7,24 +7,25 @@ Author: Maciej Kaczkowski
 import numpy as np
 import player
 import board
+import copy
 from config import *
 
 
 class Reversi:
 
     def __init__(self, first_player, second_player):
-        self.board = board.Board()
+        self.board_instance = board.Board()
         if first_player == RANDOM:
-            self.black_player = player.RandomPlayer(color=BLACK, board_instance=self.board)
+            self.black_player = player.RandomPlayer(color=BLACK, board_instance=self.board_instance)
         elif first_player == ALGO:
-            self.black_player = player.AlgoPlayer(color=BLACK, board_instance=self.board)
+            self.black_player = player.AlgoPlayer(color=BLACK, board_instance=self.board_instance)
         else:
             print("Wrong black player!")
 
         if second_player == RANDOM:
-            self.white_player = player.RandomPlayer(color=WHITE, board_instance=self.board)
+            self.white_player = player.RandomPlayer(color=WHITE, board_instance=self.board_instance)
         elif second_player == ALGO:
-            self.black_player = player.AlgoPlayer(color=WHITE, board_instance=self.board)
+            self.black_player = player.AlgoPlayer(color=WHITE, board_instance=self.board_instance)
         else:
             print("Wrong white player!")
 
@@ -34,27 +35,35 @@ class Reversi:
         running = True
 
         while running:
-            temp_state = self.board.board_state
+            passes = 0
+            print(self.board_instance.board_state)
+            self.board_instance.playing_next = BLACK
+            self.board_instance.get_moves(colour=BLACK)
 
-            self.board.playing_next = BLACK
-            self.board.get_moves(colour=BLACK)
-            _, best_child = self.black_player.play()
-            diff_board = abs(best_child.board_state) - abs(self.board.board_state)
-            chosen_move = np.where(diff_board == 1)
-            self.board.attempt_move(chosen_move, BLACK)
-            self.board.playing_next = WHITE
-            self.board.attempt_move(self.white_player.play(self.board))
+            if len(self.board_instance.possible_moves) == 0:
+                passes += 1
+            else:
+                _, best_child = self.black_player.play()
+                diff_board = abs(best_child.board_state) - abs(self.board_instance.board_state)
+                chosen_move = np.where(diff_board == 1)
+                self.board_instance.attempt_move(chosen_move, BLACK)
 
-            if temp_state.all() == self.board.board_state.all():
+            self.board_instance.playing_next = WHITE
+            self.board_instance.get_moves(colour=WHITE)
+
+            if len(self.board_instance.possible_moves) == 0:
+                passes += 1
+            else:
+                self.board_instance.attempt_move(self.white_player.play(self.board_instance))
+
+            if passes >= 2:
                 running = False
 
-        if np.sum(self.board.board_state) > 0:
+        if np.sum(self.board_instance.board_state) > 0:
             self.winner = BLACK
-            print(self.board.board_state)
             print("And the winner is...\nBlack!")
-        elif np.sum(self.board.board_state) < 0:
+        elif np.sum(self.board_instance.board_state) < 0:
             self.winner = WHITE
-            print(self.board.board_state)
             print("And the winner is...\nWhite!")
         else:
             print("Draw! Nobody wins!")

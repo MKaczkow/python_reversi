@@ -79,9 +79,7 @@ class Board:
             colour = self.playing_next
 
         if move in self.possible_moves:
-            print(self.board_state)
-            print(move)
-            self.board_state[move[0]][move[1]] = colour
+            self.board_state[move[0], move[1]] = colour
             for i in range(1, 9):
                 self.flip(i, move[0], move[1])
 
@@ -124,20 +122,20 @@ class Board:
         i = x + row_inc
         j = y + col_inc
 
-        if i in range(8) and j in range(8) and self.board_state[i][j] == -self.playing_next:
+        if i in range(8) and j in range(8) and self.board_state[i, j] == -self.playing_next:
             stones_to_flip = stones_to_flip + [(i, j)]
             i = i + row_inc
             j = j + col_inc
-            while i in range(8) and j in range(8) and self.board_state[i][j] == -self.playing_next:
+            while i in range(8) and j in range(8) and self.board_state[i, j] == -self.playing_next:
                 # search for more pieces to flip
                 stones_to_flip = stones_to_flip + [(i, j)]
                 i = i + row_inc
                 j = j + col_inc
-            if i in range(8) and j in range(8) and self.board_state[i][j] == self.playing_next:
+            if i in range(8) and j in range(8) and self.board_state[i, j] == self.playing_next:
                 # found a piece of the right color to flip the pieces between
                 for pos in stones_to_flip:
                     # flips
-                    self.board_state[pos[0]][pos[1]] = self.playing_next
+                    self.board_state[pos[0], pos[1]] = self.playing_next
 
     def heuristic_evaluate(self):
         game_state = self.board_state
@@ -156,7 +154,7 @@ class Board:
         return result
 
     def get_child_states(self, colour):
-        valid_moves = self.get_moves(colour, need_return=True)
+        valid_moves = self.get_moves(colour=colour, need_return=True)
         for move in valid_moves:
             new_board = copy.deepcopy(self)
             new_board.attempt_move(move)

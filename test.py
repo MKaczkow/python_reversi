@@ -5,17 +5,11 @@ from config import *
 import numpy as np
 
 
-a = np.zeros((2, 2))
-b = np.zeros((2, 2))
-a[0, 1] += 1
+b = board.Board()
 
-print(a)
-print(b)
-
-c = abs(b - a)
-c = list(c)
-print(c)
-
-d = np.where(c == 1)
-
-print(list(d))
+child2 = b.get_child_states(colour=BLACK)
+print(child2)
+child3 = b.get_child_states(colour=BLACK)
+print(child3)
+child4 = b.get_child_states(colour=BLACK)
+print(child4)

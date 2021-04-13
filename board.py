@@ -83,6 +83,15 @@ class Board:
             for i in range(1, 9):
                 self.flip(i, move[0], move[1])
 
+    def reset_board(self, board_size=8):
+        self.board_state = np.zeros((board_size, board_size), dtype=int)
+        self.board_state[3, 4] = BLACK
+        self.board_state[4, 3] = BLACK
+        self.board_state[3, 3] = WHITE
+        self.board_state[4, 4] = WHITE
+        self.possible_moves = np.empty([1, 2], dtype=int)
+        self.playing_next = BLACK
+
     # TODO: enum or dict as directions
     def flip(self, direction, x, y):
         if direction == 1:

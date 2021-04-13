@@ -1,14 +1,9 @@
 '''
 Author: Maciej Kaczkowski
-26.03-07.04.2021
+26.03-13.04.2021
 '''
 
 
-import numpy as np
-import board
-import minimax
-import copy
-import random
 from config import *
 from minimax import *
 

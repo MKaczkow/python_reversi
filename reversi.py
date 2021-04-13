@@ -7,7 +7,6 @@ Author: Maciej Kaczkowski
 import numpy as np
 import player
 import board
-import copy
 from config import *
 
 

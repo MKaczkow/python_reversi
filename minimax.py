@@ -1,11 +1,10 @@
 '''
 Author: Maciej Kaczkowski
-26.03-07.04.2021
+26.03-13.04.2021
 '''
 
 import numpy as np
 import board
-from config import *
 
 
 class Minimax(object):

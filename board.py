@@ -1,6 +1,6 @@
 '''
 Author: Maciej Kaczkowski
-26.03-07.04.2021
+26.03-13.04.2021
 '''
 
 
@@ -92,7 +92,6 @@ class Board:
         self.possible_moves = np.empty([1, 2], dtype=int)
         self.playing_next = BLACK
 
-    # TODO: enum or dict as directions
     def flip(self, direction, x, y):
         if direction == 1:
             # north

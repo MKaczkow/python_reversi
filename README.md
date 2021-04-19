@@ -1,6 +1,6 @@
-# WSI_lab_3_Reversi
+Playing Reversi with python, using MinMax with Alpha-Beta  
 
-Simple algo for WSI 21L course playing Reversi, using MinMax with Alpha-Beta
+Running: download all files and run "reversi.py" using command line or any python IDE.  
+Doesn't contain GUI - playing happens in console.  
 
-Start: 26.03.2021  
-Deadline: 08.04.2021
+Coded for WSI course at Spring '21 semester.

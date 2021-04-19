@@ -1,4 +1,4 @@
-Playing Reversi with python, using MinMax with Alpha-Beta  
+Playing Reversi with Python, using MinMax with Alpha-Beta  
 
 Running: download all files and run "reversi.py" using command line or any python IDE.  
 Doesn't contain GUI - playing happens in console.  
